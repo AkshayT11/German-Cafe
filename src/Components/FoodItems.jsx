@@ -4,7 +4,7 @@ import FoodData from '../data/FoodData'
 
 const FoodItems = () => {
   return (
-    <div>
+    <div className='flex flex-wrap gap-10 justify-center mx-5 lg:justify-start my-10'>
         {FoodData.map((item)=> {
             return  <CardFood 
             key={item.id}
