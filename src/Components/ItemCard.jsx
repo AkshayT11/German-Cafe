@@ -2,6 +2,7 @@ import React from "react";
 import { AiOutlineMinus, AiOutlinePlus, AiTwotoneDelete } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { decrementQty, increamentQty, removeFromCart } from "../redux/slices/CartSlice";
+import toast, { Toaster } from "react-hot-toast";
 
 const ItemCard = ({ id, price, name, img, qty }) => {
   const dispatch = useDispatch();
@@ -10,7 +11,11 @@ const ItemCard = ({ id, price, name, img, qty }) => {
     <div className="flex gap-2 shadow-md rounded-lg p-2 mb-2">
       {/* Remove or Delete from Cart */}
       <AiTwotoneDelete
-        onClick={() => dispatch(removeFromCart({ id, img, name, price, qty }))}
+        onClick={() => {
+          dispatch(removeFromCart({ id, img, name, price, qty }))
+          toast.error("Item Removed From Cart")
+        }
+      }
         size={20}
         className="absolute right-5 cursor-pointer hover:text-red-500"
       />

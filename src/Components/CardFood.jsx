@@ -3,7 +3,7 @@ import {AiTwotoneStar} from "react-icons/ai"
 import {useDispatch} from "react-redux";
 import { addToCart } from "../redux/slices/CartSlice";
 
-const CardFood = ({id,name,price,rating,desc,img}) => {
+const CardFood = ({id,name,price,rating,desc,img,handleToast}) => {
 
   const dispatch = useDispatch();
 
@@ -26,7 +26,9 @@ const CardFood = ({id,name,price,rating,desc,img}) => {
             </span>
             <button 
             onClick={()=> {
-              dispatch(addToCart({id,name,price,img, rating,qty : 1}))
+              dispatch(addToCart({id,name,price,img, rating,qty : 1})
+              );
+               handleToast(name); 
             } }
             className="px-3 py-2 bg-green-500 text-white rounded-lg
              hover:bg-green-600">Add To Cart</button>

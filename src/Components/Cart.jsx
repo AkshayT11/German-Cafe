@@ -3,12 +3,20 @@ import { GrClose } from "react-icons/gr";
 import ItemCard from "./ItemCard";
 import { useSelector } from "react-redux";
 import {FaCartShopping} from "react-icons/fa6"
+import {useNavigate} from "react-router-dom"
 
 const Cart = () => {
   const [activeCart, setActiveCart]= useState(true);
 
   const cartItems = useSelector((state)=> state.cart.cart)
   console.log(cartItems);
+// its to know total qty of cart items 
+  const totalQty = cartItems.reduce((totalQty,item)=>  totalQty + item.qty,0 )
+  // total price calculate 
+  const totalPrice = cartItems.reduce((total,item)=> total + item.qty * item.price,0 );
+
+  const navigate = useNavigate()
+
 
   return (
     <div>
@@ -39,18 +47,22 @@ const Cart = () => {
 
         {/* order details */}
         <div className="absolute bottom-1 px-2">
-          <h3 className="text-md font-black ml-3 my-1">Items :</h3>
-          <h3 className="text-md font-black ml-3 my-1">Total Amount:</h3>
+          <h3 className="text-md font-black ml-3 my-1">Items : {totalQty} </h3>
+          <h3 className="text-md font-black ml-3 my-1">Total Amount:  ₹ {totalPrice} </h3>
           <hr />
-          <button className="bg-green-500 text-white py-2 lg:w-[280px] w-[90%]
+          <button 
+          onClick={()=> navigate("/success") }
+          className="bg-green-500 text-white py-2 lg:w-[280px] w-[90%]
            font-bold cursor-pointer hover:bg-green-600 lg:mx-2 mx-1  rounded-lg mb-5">Checkout Items</button>
         </div>
       </div>
         {/* shopping cart symbol  */}
         <FaCartShopping 
+          
         onClick={()=> setActiveCart(!activeCart) }
-         className="bg-white rounded-full shadow-md text-6xl 
-         cursor-pointer hover:bg-blue-400 p-4 fixed bottom-10 right-5 " />
+         className= {`bg-white rounded-full shadow-md text-6xl 
+         cursor-pointer hover:bg-blue-400 p-4 fixed bottom-10 right-5 ${totalQty > 0 && "animate-bounce delay-500 transition-all" }   `}  />
+         <span className="text-lg bg-blue-500 p-1 font-black absolute right-0 top-20 ">{totalQty} </span>
     </div>
   );
 };
